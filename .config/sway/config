@@ -1,0 +1,329 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+#exec waybar
+#exec waybar -c ~/.config/waybar/config-vertical.jsonc -s ~/.config/waybar/style-vertical.css
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+set $term kitty
+# Your preferred application launcher
+set $menu wofi --show drun
+set $file_explorer nautilus
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+#output * bg /home/ms/Downloads/wallpaper.jpg fill
+exec /home/ms/.local/bin/mpvpaper -p -f -o "loop no-audio hwdec=auto vo=dmabuf-wayland" '*' /home/ms/Downloads/wallpaper1_1080p.mp4
+
+#
+# Example configuration:
+#
+#output HDMI-1 resolution 1920x1080@144.003 Hz position 1920, 0
+
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+#========making the border and gaps=============== 
+gaps inner 5 
+gaps outer 5
+
+default_border pixel 3
+default_floating_border pixel 3
+
+exec_always ~/.config/eww/scripts/start.sh
+#==== broder colors =====
+
+#                         border    bg        text      ind       child border
+client.focused          #d8cab8 #141216 #d8cab8 #d8cab8 #d8cab8
+client.focused_inactive #AC82E9 #141216 #d8cab8 #AC82E9 #AC82E9
+client.unfocused        #AC82E9 #141216 #d8cab8 #AC82E9 #AC82E9
+client.urgent           #fcb167 #141216 #d8cab8 #fcb167 #fcb167
+client.placeholder      #AC82E9 #141216 #d8cab8 #AC82E9 #AC82E9
+
+### Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input type:touchpad {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+#   input type:keyboard {
+#       xkb_layout "eu"
+#   }
+#
+# You can also configure each device individually.
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+q kill
+    
+    # Open file explorer 
+    bindsym $mod+e exec $file_explorer
+
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+#
+# Utilities:
+#
+    # Special keys to adjust volume via PulseAudio
+    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
+    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+
+    # Special keys to control media via playerctl
+    bindsym --locked XF86AudioPlay exec playerctl play-pause
+    bindsym --locked XF86AudioPause exec playerctl play-pause
+    bindsym --locked XF86AudioPrev exec playerctl previous
+    bindsym --locked XF86AudioNext exec playerctl next
+    bindsym --locked XF86AudioStop exec playerctl stop
+
+    # Special keys to adjust brightness via brightnessctl
+    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+    # Special key to take a screenshot with grim
+    bindsym Print exec grim
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    swaybar_command waybar 
+    }
+
+#include /etc/sway/config.d/*
+
+# --- SwayFX Eye Candy Configuration ---
+
+# Corner Radius (Rounded Corners)
+corner_radius 10
+smart_corner_radius enable
+
+# Window Blur
+blur enable
+blur_xray disable
+blur_passes 9
+blur_radius 9
+#blur_noise 1.0
+#blur_brightness 1.0
+#blur_contrast 1.0
+#blur_saturation 1.0
+
+# Window Drop Shadows
+shadows enable
+shadow_blur_radius 15
+shadow_color #0000007F
+
+# Dim Inactive Windows
+default_dim_inactive 0.30
+
+# Apply Blur/Shadows to Waybar
+layer_effects "waybar" blur enable; shadows enable; corner_radius 10
+
+# Apply Blur/Glassmorphism to Eww music sidebar panels
+layer_effects "eww" blur enable; corner_radius 12
+
+# Window Animations
+# NOTE: Native animations (movement, resize, open/close, workspace switch)
+# require SwayFX compiled from the latest git master branch (e.g., swayfx-git package).
+# Standard SwayFX 0.5.3 (stable) does not support these commands yet.
+# Once on the git branch, configure timing globally using:
+animation_duration_ms 150
+
+# Auto-start Bluetooth agent
+exec blueman-applet
+
+# Auto-start NetworkManager applet (adds system tray icon for Wi-Fi)
+exec nm-applet --indicator
+
+# Float and center the nmtui terminal window launched from Waybar
+for_window [app_id="nmtui"] floating enable, resize set 800 600, move position center
+
+# Music sidebar: auto-float and snap Edge app windows into sidebar position
+for_window [app_id="msedge-music.youtube.com__-Default"] move to workspace current, floating enable, border none, move position 0 130, resize set 340 800
+for_window [app_id="msedge-open.spotify.com__-Default"] move to workspace current, floating enable, border none, move position 0 130, resize set 340 800
+
+
+
+#touchpad configs 
+input "type:touchpad" {
+    tap enabled         # enables click-on-tap
+    tap_button_map lrm  # tap with 1 finger = left click, 2 fingers = right click, 3 fingers = middle click
+    dwt enabled         # disable (touchpad) while typing
+    dwtp enabled        # disable (touchpad) while track pointing
+}
+
+# Touchpad gestures for workspace switching (3 and 4 fingers)
+# Swipe left -> moves to previous workspace (workspace to the left)
+bindgesture swipe:3:left workspace prev
+bindgesture swipe:4:left workspace prev
+
+# Swipe right -> moves to next workspace (workspace to the right)
+bindgesture swipe:3:right workspace next
+bindgesture swipe:4:right workspace next
+
+
+
