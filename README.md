@@ -56,4 +56,4 @@ Since the configs in your home folder will be symlinked to this repository, any 
 - `pkill mpvpaper; swaymsg exec "/home/ms/.local/bin/mpvpaper -p -f -o 'loop no-audio hwdec=auto vo=dmabuf-wayland' '*' <path to new video>"`
 
 
-## If you have AcerALG lapotop you can control keyboard backlight using this tool https://github.com/24kaushik/alg-cli
+# If you have AcerALG lapotop you can control keyboard backlight using this tool at https://github.com/24kaushik/alg-cli
